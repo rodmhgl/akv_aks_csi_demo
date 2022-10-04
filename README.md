@@ -58,9 +58,8 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_client_certificate"></a> [client\_certificate](#output\_client\_certificate) | n/a |
-| <a name="output_key_vault_name"></a> [key\_vault\_name](#output\_key\_vault\_name) | n/a |
-| <a name="output_kube_config"></a> [kube\_config](#output\_kube\_config) | n/a |
-| <a name="output_oidc_issuer_url"></a> [oidc\_issuer\_url](#output\_oidc\_issuer\_url) | n/a |
-| <a name="output_resource_group_name"></a> [resource\_group\_name](#output\_resource\_group\_name) | n/a |
+| <a name="output_key_vault_name"></a> [key\_vault\_name](#output\_key\_vault\_name) | Name of the Key Vault. |
+| <a name="output_kube_config"></a> [kube\_config](#output\_kube\_config) | Raw Kube config file to use for access to the cluster. |
+| <a name="output_oidc_issuer_url"></a> [oidc\_issuer\_url](#output\_oidc\_issuer\_url) | OIDC Issuer URL to be used for token issuance. |
+| <a name="output_resource_group_name"></a> [resource\_group\_name](#output\_resource\_group\_name) | Name of the Resource Group. |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
