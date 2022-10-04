@@ -1,5 +1,5 @@
 # TF_AKS_AKV
-Just playing around with AKS and the AKV CSI driver along with logging into VMs via bastion using native AAD SSO.
+Just playing around with AKS and the AKV CSI driver. As a bonus, you can uncomment the VM and Bastion related code and also to play around with logging into VMs via Azure Bastion using AAD SSO.
 
 If you aren't deploying from Linux or WSL, comment out the contents of create_env_var_script.tf.
 
