@@ -11,7 +11,7 @@ variable "location" {
 }
 
 variable "akv_prefix" {
-  default     = "this_akv"
+  default     = "regen"
   type        = string
-  description = "Keeper for the akv random postfix."
+  description = "Keeper for the akv random postfix. Update value to generate new names."
 }

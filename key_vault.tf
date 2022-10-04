@@ -1,3 +1,5 @@
+# Cheap and easy way to get randomized key vault name
+# Change the value of var.akv_previs to regenerates
 resource "random_integer" "akvname" {
   min = 1
   max = 50000
@@ -6,6 +8,7 @@ resource "random_integer" "akvname" {
   }
 }
 
+# Key Vault that the k8s pod will pull secrets from
 resource "azurerm_key_vault" "this" {
   name                        = "keyvault${random_integer.akvname.result}"
   location                    = azurerm_resource_group.this.location
@@ -18,15 +21,17 @@ resource "azurerm_key_vault" "this" {
   sku_name = "standard"
 }
 
+# Set access policies for the user running Terraform
 resource "azurerm_key_vault_access_policy" "this" {
   key_vault_id        = azurerm_key_vault.this.id
   tenant_id           = data.azurerm_client_config.current.tenant_id
   object_id           = data.azurerm_client_config.current.object_id
-  key_permissions     = ["Get", "List", ]
-  secret_permissions  = ["Get", "List", "Set", ]
-  storage_permissions = ["Get", "List", "Set", ]
+  key_permissions     = ["Get", "List", "Delete", "Purge", ]
+  secret_permissions  = ["Backup", "Delete", "Get", "List", "Purge", "Recover", "Restore", "Set", ]
+  storage_permissions = ["Get", "List", "Set", "Delete", "Purge", ]
 }
 
+# Set access policies for the AAD Application
 resource "azurerm_key_vault_access_policy" "that" {
   key_vault_id        = azurerm_key_vault.this.id
   tenant_id           = data.azurerm_client_config.current.tenant_id
@@ -36,10 +41,16 @@ resource "azurerm_key_vault_access_policy" "that" {
   storage_permissions = ["Get", "List", "Set", ]
 }
 
-resource "azurerm_key_vault_secret" "example" {
+# Create test secret for k8s pod to pull
+resource "azurerm_key_vault_secret" "this" {
   name            = "my-secret"
   value           = "Hello!"
   key_vault_id    = azurerm_key_vault.this.id
   expiration_date = "2023-10-31T00:00:00Z"
   content_type    = "password"
+
+  depends_on = [
+    azurerm_key_vault_access_policy.this,
+    azurerm_key_vault_access_policy.that,
+  ]
 }

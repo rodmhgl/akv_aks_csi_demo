@@ -1,4 +1,4 @@
-locals {
+/* locals {
   bastion_ip_name   = "${var.prefix}bastionpip"
   bastion_host_name = "${var.prefix}bastion"
 }
@@ -35,4 +35,4 @@ resource "azurerm_bastion_host" "that" {
     subnet_id            = azurerm_subnet.bastion.id
     public_ip_address_id = azurerm_public_ip.that.id
   }
-}
+} */

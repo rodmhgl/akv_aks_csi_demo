@@ -9,6 +9,7 @@ resource "azurerm_resource_group" "this" {
   location = var.location
 }
 
+# Creates k8s cluster with OIDC enabled and key_vault_secrets_provider
 resource "azurerm_kubernetes_cluster" "this" {
   name                = local.aks_name
   location            = azurerm_resource_group.this.location
