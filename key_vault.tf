@@ -23,23 +23,26 @@ resource "azurerm_key_vault" "this" {
 
 # Set access policies for the user running Terraform
 resource "azurerm_key_vault_access_policy" "this" {
-  key_vault_id        = azurerm_key_vault.this.id
-  tenant_id           = data.azurerm_client_config.current.tenant_id
-  object_id           = data.azurerm_client_config.current.object_id
-  key_permissions     = ["Get", "List", "Delete", "Purge", ]
-  secret_permissions  = ["Backup", "Delete", "Get", "List", "Purge", "Recover", "Restore", "Set", ]
-  storage_permissions = ["Get", "List", "Set", "Delete", "Purge", ]
+  key_vault_id            = azurerm_key_vault.this.id
+  tenant_id               = data.azurerm_client_config.current.tenant_id
+  object_id               = data.azurerm_client_config.current.object_id
+  key_permissions         = var.admin_key_permissions
+  secret_permissions      = var.admin_secret_permissions
+  storage_permissions     = var.admin_storage_permissions
+  certificate_permissions = var.admin_certificate_permissions
 }
 
 # Set access policies for the AAD Application
 resource "azurerm_key_vault_access_policy" "that" {
-  key_vault_id        = azurerm_key_vault.this.id
-  tenant_id           = data.azurerm_client_config.current.tenant_id
-  object_id           = azuread_service_principal.this.object_id
-  key_permissions     = ["Get", "List", ]
-  secret_permissions  = ["Get", "List", "Set", ]
-  storage_permissions = ["Get", "List", "Set", ]
+  key_vault_id            = azurerm_key_vault.this.id
+  tenant_id               = data.azurerm_client_config.current.tenant_id
+  object_id               = azuread_service_principal.this.object_id
+  key_permissions         = var.aad_key_permissions
+  secret_permissions      = var.aad_secret_permissions
+  storage_permissions     = var.aad_storage_permissions
+  certificate_permissions = var.aad_certificate_permissions
 }
+
 
 # Create test secret for k8s pod to pull
 resource "azurerm_key_vault_secret" "this" {
@@ -48,6 +51,10 @@ resource "azurerm_key_vault_secret" "this" {
   key_vault_id    = azurerm_key_vault.this.id
   expiration_date = "2023-10-31T00:00:00Z"
   content_type    = "password"
+
+  tags = {
+    file-encoding = "utf-8"
+  }
 
   depends_on = [
     azurerm_key_vault_access_policy.this,
