@@ -11,13 +11,13 @@ repos:
       - --hook-config=--add-to-existing-file=true     # Boolean. true or false
       - --hook-config=--create-file-if-not-exist=true # Boolean. true or false
     # - id: terraform_checkov
-    - id: infracost_breakdown
-      args:
-        - --args=--path=.
-      verbose: true
     - id: terraform_providers_lock
     # - id: terraform_tfsec
     # - id: terrascan
     - id: tfupdate
       args:
       - --args=--version 1.2.7
+    # - id: infracost_breakdown
+    #   args:
+    #     - --args=--path=.
+    #   verbose: true
