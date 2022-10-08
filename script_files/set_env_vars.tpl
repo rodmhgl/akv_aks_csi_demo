@@ -1,3 +1,5 @@
+#!/bin/bash
+
 cat <<EOF >>./set_env_vars.sh
 # environment variables for the Azure Key Vault resource
 export KEYVAULT_NAME="${KEYVAULT_NAME}"
@@ -18,5 +20,5 @@ export APPLICATION_OBJECT_ID="${APPLICATION_OBJECT_ID}"
 export AZURE_SUBSCRIPTION_ID="${AZURE_SUBSCRIPTION_ID}"
 export AZURE_TENANT_ID="${AZURE_TENANT_ID}"
 
-export KEYVAULT_URL="$(az keyvault show -g ${RESOURCE_GROUP_NAME} -n ${KEYVAULT_NAME} --query properties.vaultUri -o tsv)"
+export KEYVAULT_URL="${KEYVAULT_URL}"
 EOF
