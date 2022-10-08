@@ -10,6 +10,7 @@ resource "random_integer" "akvname" {
 
 # Key Vault that the k8s pod will pull secrets from
 resource "azurerm_key_vault" "this" {
+  # checkov:skip=CKV_AZURE_109: LAB AKV
   name                        = "keyvault${random_integer.akvname.result}"
   location                    = azurerm_resource_group.this.location
   resource_group_name         = azurerm_resource_group.this.name
