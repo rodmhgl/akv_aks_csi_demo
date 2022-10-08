@@ -11,10 +11,12 @@ resource "azurerm_resource_group" "this" {
 
 # Creates k8s cluster with OIDC enabled and key_vault_secrets_provider
 resource "azurerm_kubernetes_cluster" "this" {
-  name                = local.aks_name
-  location            = azurerm_resource_group.this.location
-  resource_group_name = azurerm_resource_group.this.name
-  dns_prefix          = local.dns_prefix
+  name                    = local.aks_name
+  location                = azurerm_resource_group.this.location
+  resource_group_name     = azurerm_resource_group.this.name
+  dns_prefix              = local.dns_prefix
+  private_cluster_enabled = var.private_aks_cluster
+  local_account_disabled  = var.aks_admin_disabled
   # OIDC Issuer required for AD Workload Identity
   oidc_issuer_enabled = true
 

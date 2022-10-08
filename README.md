@@ -60,9 +60,11 @@ No modules.
 | <a name="input_admin_key_permissions"></a> [admin\_key\_permissions](#input\_admin\_key\_permissions) | Admin Level Key Vault Permissions for Keys. | `list(any)` | <pre>[<br>  "Get",<br>  "List",<br>  "Delete",<br>  "Purge",<br>  "Update",<br>  "Create",<br>  "Import",<br>  "Recover",<br>  "Backup",<br>  "Restore",<br>  "GetRotationPolicy",<br>  "SetRotationPolicy",<br>  "Rotate",<br>  "Encrypt",<br>  "Decrypt",<br>  "UnwrapKey",<br>  "WrapKey",<br>  "Verify",<br>  "Sign",<br>  "Release"<br>]</pre> | no |
 | <a name="input_admin_secret_permissions"></a> [admin\_secret\_permissions](#input\_admin\_secret\_permissions) | Admin Level Key Vault Permissions for Secrets. | `list(any)` | <pre>[<br>  "Backup",<br>  "Delete",<br>  "Get",<br>  "List",<br>  "Purge",<br>  "Recover",<br>  "Restore",<br>  "Set"<br>]</pre> | no |
 | <a name="input_admin_storage_permissions"></a> [admin\_storage\_permissions](#input\_admin\_storage\_permissions) | Admin Level Key Vault Permissions for Storage. | `list(any)` | <pre>[<br>  "Get",<br>  "List",<br>  "Set",<br>  "Delete",<br>  "Purge"<br>]</pre> | no |
+| <a name="input_aks_admin_disabled"></a> [aks\_admin\_disabled](#input\_aks\_admin\_disabled) | Disables AKS local admin account if set to true. | `bool` | `false` | no |
 | <a name="input_akv_prefix"></a> [akv\_prefix](#input\_akv\_prefix) | Keeper for the akv random postfix. Update value to generate new names. | `string` | `"regen"` | no |
 | <a name="input_location"></a> [location](#input\_location) | Location to use for the deployment. | `string` | `"eastus"` | no |
 | <a name="input_prefix"></a> [prefix](#input\_prefix) | Prefix to use for naming. | `string` | `"akvpoc"` | no |
+| <a name="input_private_aks_cluster"></a> [private\_aks\_cluster](#input\_private\_aks\_cluster) | Disables AKS API Server's public IP if set to true. | `bool` | `false` | no |
 
 ## Outputs
 

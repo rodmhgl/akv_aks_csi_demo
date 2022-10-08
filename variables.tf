@@ -64,3 +64,15 @@ variable "aad_certificate_permissions" {
   default     = ["Get", "List", "Update", "Create", "Import", ]
   description = "AAD Level Key Vault Permissions for Certificate."
 }
+
+variable "private_aks_cluster" {
+  type        = bool
+  default     = false
+  description = "Disables AKS API Server's public IP if set to true."
+}
+
+variable "aks_admin_disabled" {
+  type        = bool
+  default     = false
+  description = "Disables AKS local admin account if set to true."
+}
