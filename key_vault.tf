@@ -20,6 +20,10 @@ resource "azurerm_key_vault" "this" {
   purge_protection_enabled    = true
 
   sku_name = "standard"
+
+  tags = {
+    environment = var.environment
+  }
 }
 
 # Set access policies for the user running Terraform
@@ -55,6 +59,7 @@ resource "azurerm_key_vault_secret" "this" {
 
   tags = {
     file-encoding = "utf-8"
+    environment   = var.environment
   }
 
   depends_on = [

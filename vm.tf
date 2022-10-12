@@ -1,4 +1,4 @@
-/* resource "azurerm_network_interface" "this" {
+resource "azurerm_network_interface" "this" {
   # checkov:skip=CKV_AZURE_119: ADD REASON
   name                = "this-nic"
   location            = azurerm_resource_group.this.location
@@ -10,9 +10,14 @@
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = azurerm_public_ip.this.id
   }
+
+  tags = {
+    environment = var.environment
+  }
 }
 
 resource "azurerm_linux_virtual_machine" "this" {
+  # checkov:skip=CKV_AZURE_50: AADSSHLoginforLinux extension in use
   name                = "this-machine"
   resource_group_name = azurerm_resource_group.this.name
   location            = azurerm_resource_group.this.location
@@ -24,7 +29,7 @@ resource "azurerm_linux_virtual_machine" "this" {
 
   admin_ssh_key {
     username   = "adminuser"
-    public_key = file("~/.ssh/id_rsa.pub")
+    public_key = tls_private_key.ssh_key.public_key_openssh # file("~/.ssh/id_rsa.pub")
   }
 
   identity {
@@ -42,6 +47,10 @@ resource "azurerm_linux_virtual_machine" "this" {
     sku       = "16.04-LTS"
     version   = "latest"
   }
+
+  tags = {
+    environment = var.environment
+  }
 }
 
 resource "azurerm_virtual_machine_extension" "aad_ssh_login" {
@@ -52,7 +61,6 @@ resource "azurerm_virtual_machine_extension" "aad_ssh_login" {
   virtual_machine_id         = azurerm_linux_virtual_machine.this.id
   auto_upgrade_minor_version = true
 }
-
 
 resource "azurerm_role_assignment" "assign-vm-role" {
   scope                = azurerm_linux_virtual_machine.this.id
@@ -67,6 +75,20 @@ resource "azurerm_public_ip" "this" {
   allocation_method   = "Static"
 
   tags = {
-    environment = "Production"
+    environment = var.environment
   }
-} */
+}
+
+# Create (and display) an SSH key
+resource "tls_private_key" "ssh_key" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+resource "azurerm_key_vault_secret" "vm_ssh_key" {
+  content_type    = "password"
+  name            = "${azurerm_linux_virtual_machine.this.name}-sshkey"
+  value           = tls_private_key.ssh_key.private_key_openssh
+  key_vault_id    = azurerm_key_vault.this.id
+  expiration_date = "2023-10-08T23:59:59Z"
+}

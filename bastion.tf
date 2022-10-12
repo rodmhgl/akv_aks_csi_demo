@@ -1,4 +1,4 @@
-/* locals {
+locals {
   bastion_ip_name   = "${var.prefix}bastionpip"
   bastion_host_name = "${var.prefix}bastion"
 }
@@ -9,6 +9,10 @@ resource "azurerm_public_ip" "that" {
   resource_group_name = azurerm_resource_group.this.name
   allocation_method   = "Static"
   sku                 = "Standard"
+
+  tags = {
+    environment = var.environment
+  }
 }
 
 resource "azurerm_subnet" "bastion" {
@@ -35,4 +39,8 @@ resource "azurerm_bastion_host" "that" {
     subnet_id            = azurerm_subnet.bastion.id
     public_ip_address_id = azurerm_public_ip.that.id
   }
-} */
+
+  tags = {
+    environment = var.environment
+  }
+}

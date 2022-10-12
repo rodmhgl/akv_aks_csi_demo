@@ -1,3 +1,9 @@
+variable "environment" {
+  type        = string
+  default     = "dev"
+  description = "Environment value to use for tagging."
+}
+
 variable "prefix" {
   type        = string
   default     = "akvpoc"
@@ -75,4 +81,10 @@ variable "aks_admin_disabled" {
   type        = bool
   default     = false
   description = "Disables AKS local admin account if set to true."
+}
+
+variable "admin_group_object_ids" {
+  type        = list(any)
+  default     = null
+  description = "The group(s) that should be given AKS Admin Role on the cluster."
 }

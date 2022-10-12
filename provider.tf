@@ -22,16 +22,23 @@ terraform {
       source  = "hashicorp/random"
       version = "3.4.3"
     }
-    null = {
+    /* null = {
       source  = "hashicorp/null"
       version = "3.1.1"
+    } */
+    tls = {
+      source  = "hashicorp/tls"
+      version = "4.0.3"
     }
   }
 }
 
-provider "azuread" {
-}
-
+provider "tls" {}
+provider "random" {}
+provider "azuread" {}
 provider "azurerm" {
   features {}
 }
+# null was formerly used as part of create_env_var_script.tf
+# Which has been deprecated since the move to TF Cloud
+/* provider "null" {} */

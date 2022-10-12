@@ -4,7 +4,8 @@
 # If you aren't running Terraform from Linux / WSL,
 # you can comment this portion out.
 # This can be made OS-agnostic but not for an MVP :)
-resource "null_resource" "output_file" {
+# Deprecated due to moving to TF Cloud
+/* resource "null_resource" "output_file" {
   triggers = {
     always_run = timestamp()
   }
@@ -24,4 +25,4 @@ resource "null_resource" "output_file" {
     })
     interpreter = ["bash", "-c"]
   }
-}
+} */
