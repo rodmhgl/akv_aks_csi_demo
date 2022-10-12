@@ -70,5 +70,7 @@ No modules.
 
 | Name | Description |
 |------|-------------|
+| <a name="output_bastion_connect_command_line"></a> [bastion\_connect\_command\_line](#output\_bastion\_connect\_command\_line) | Command line to connect to the VM via the Bastion using AAD SSO. |
 | <a name="output_kube_config"></a> [kube\_config](#output\_kube\_config) | Raw Kube config file to use for access to the cluster. |
+| <a name="output_private_key_retrieval_command_line"></a> [private\_key\_retrieval\_command\_line](#output\_private\_key\_retrieval\_command\_line) | Command line to retrieve private key. |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
